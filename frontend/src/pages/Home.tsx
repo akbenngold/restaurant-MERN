@@ -1,3 +1,10 @@
+import Banner from "../components/Banner.tsx";
+import Categories from "../components/Categories.tsx";
 export const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Banner />
+      <Categories />
+    </div>
+  );
 };
