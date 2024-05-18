@@ -4,7 +4,7 @@ import { BiPhoneCall } from "react-icons/bi";
 import { useEffect, useState } from "react";
 
 export const Navbar = () => {
-  const [isSticky, setIsSticky] = useState();
+  const [isSticky, setIsSticky] = useState(Boolean);
 
   useEffect(() => {
     const handleScroll = () => {
