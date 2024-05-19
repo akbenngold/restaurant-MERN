@@ -2,6 +2,7 @@ import { PiBag } from "react-icons/pi";
 import logo from "/logo.png";
 import { BiPhoneCall } from "react-icons/bi";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   const [isSticky, setIsSticky] = useState(Boolean);
@@ -27,14 +28,16 @@ export const Navbar = () => {
     <>
       {" "}
       <li>
-        <a>Home</a>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
         <details>
-          <summary>Menu</summary>
+          <summary>
+            <NavLink to="/menu">Menu</NavLink>
+          </summary>
           <ul className="p-2">
             <li>
-              <a>All</a>
+              <a href="/menu">All</a>
             </li>
             <li>
               <a>Salad</a>

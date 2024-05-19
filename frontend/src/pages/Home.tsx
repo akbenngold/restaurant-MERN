@@ -5,7 +5,7 @@ import Story from "../components/Story.tsx";
 import Testimonials from "../components/Testimonials.tsx";
 export const Home = () => {
   return (
-    <div className="flex flex-col gap-[4rem] mb-[5rem]">
+    <div className="flex flex-col gap-[8rem] mb-[5rem]">
       <Banner />
       <Categories />
       <SpecialDishes />

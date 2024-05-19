@@ -4,7 +4,7 @@ import review from "../assets/review.png";
 
 function Testimonials() {
   return (
-    <div className="flex section-container ">
+    <div className="flex flex-col section-container md:flex-row ">
       <div className="md:w-1/2">
         <img src={banner2} alt="" />
       </div>
