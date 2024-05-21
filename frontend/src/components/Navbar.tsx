@@ -1,6 +1,6 @@
-import { PiBag } from "react-icons/pi";
+// import { PiBag } from "react-icons/pi";
 import logo from "/logo.png";
-import { BiPhoneCall } from "react-icons/bi";
+// import { BiPhoneCall } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -130,15 +130,13 @@ export const Navbar = () => {
           </button>
           <button className="btn btn-ghost btn-circle">
             <div className="indicator">
-              <PiBag size="1.4rem" />{" "}
+              {/* <PiBag size="1.4rem" />{" "} */}
               <span className="badge badge-xs badge-primary indicator-item">
                 5
               </span>
             </div>
           </button>
-          <a className="btn rounded-full bg-green text-white">
-            <BiPhoneCall /> Contact
-          </a>
+          <a className="btn rounded-full bg-green text-white">Contact</a>
         </div>
       </div>
     </header>

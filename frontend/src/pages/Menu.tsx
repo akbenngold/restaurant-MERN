@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { NavLink } from "react-router-dom";
 function Menu() {
   const [menu, setMenu] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -25,7 +25,30 @@ function Menu() {
           </div>
         </div>
       </div>
-      <div className="section-container"></div>
+      <div className="section-container">
+        <nav>
+          <ul className="flex gap-4 justify-center">
+            <li>
+              <NavLink to="">All</NavLink>
+            </li>
+            <li>
+              <NavLink to="">Salad</NavLink>
+            </li>
+            <li>
+              <NavLink to="">Pizza</NavLink>
+            </li>
+            <li>
+              <NavLink to="">Soups</NavLink>
+            </li>
+            <li>
+              <NavLink to="">Dessert</NavLink>
+            </li>
+            <li>
+              <NavLink to="">Drinks</NavLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }
