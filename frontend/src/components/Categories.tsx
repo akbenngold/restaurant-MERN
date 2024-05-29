@@ -3,7 +3,14 @@ import breakfastpng from "../assets/breakfast.png";
 import dessertpng from "../assets/dessert.png";
 import allpng from "../assets/all.png";
 
-const categoryItems = [
+type Categories = {
+  id: number;
+  title: string;
+  desc: string;
+  images: string;
+}[];
+
+const categoryItems: Categories = [
   {
     id: 1,
     title: "Main Dish",

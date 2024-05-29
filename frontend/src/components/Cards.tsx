@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-interface Item {
-  image: string;
-}
+type CardsProps = {
+  item: {
+    image: string;
+    price: number;
+    recipe: string;
+    name: string;
+    _id: string;
+  };
+};
 
-interface CardsProps {
-  item: Item;
-}
-
-const Cards: React.FC<CardsProps> = ({ item }) => {
+const Cards = ({ item }: CardsProps) => {
   const [heartFill, setHeartFill] = useState(false);
 
   const handleHeartFill = () => {

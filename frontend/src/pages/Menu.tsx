@@ -1,10 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import data from "../data/menu.json";
+import Cards from "../components/Cards";
+
+type menuType = { category: string /* other properties */ }[];
+type selectedCategoryType =
+  | "all"
+  | "salad"
+  | "pizza"
+  | "soups"
+  | "dessert"
+  | "drinks";
+
 function Menu() {
-  const [menu, setMenu] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortOption, setSortOption] = useState("default");
+  const [menu, setMenu] = useState<menuType>([]);
+  const [filtered, setFiltered] = useState<menuType>([]);
+  const [selectedCategory, setSelectedCategory] =
+    useState<selectedCategoryType>("all");
+  const [sortOption, setSortOption] = useState<string>("default");
+
+  useEffect(() => {
+    setMenu(data);
+    setFiltered(data);
+  }, []);
+
+  const filterItems = (category: selectedCategoryType) => {
+    const filteredItems =
+      category === "all"
+        ? menu
+        : menu.filter((item) => item.category === category);
+    setFiltered(filteredItems);
+  };
 
   return (
     <div>
@@ -29,25 +55,42 @@ function Menu() {
         <nav>
           <ul className="flex gap-4 justify-center">
             <li>
-              <NavLink to="">All</NavLink>
+              <NavLink to="#" onClick={() => filterItems("all")}>
+                All
+              </NavLink>
             </li>
             <li>
-              <NavLink to="">Salad</NavLink>
+              <NavLink to="#" onClick={() => filterItems("salad")}>
+                Salad
+              </NavLink>
             </li>
             <li>
-              <NavLink to="">Pizza</NavLink>
+              <NavLink to="#" onClick={() => filterItems("pizza")}>
+                Pizza
+              </NavLink>
             </li>
             <li>
-              <NavLink to="">Soups</NavLink>
+              <NavLink to="#" onClick={() => filterItems("soups")}>
+                Soups
+              </NavLink>
             </li>
             <li>
-              <NavLink to="">Dessert</NavLink>
+              <NavLink to="#" onClick={() => filterItems("dessert")}>
+                Dessert
+              </NavLink>
             </li>
             <li>
-              <NavLink to="">Drinks</NavLink>
+              <NavLink to="#" onClick={() => filterItems("drinks")}>
+                Drinks
+              </NavLink>
             </li>
           </ul>
         </nav>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {filtered.map((item, index) => (
+            <Cards key={index} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   );
