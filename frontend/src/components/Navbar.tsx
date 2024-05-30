@@ -1,11 +1,14 @@
 // import { PiBag } from "react-icons/pi";
 import logo from "/logo.png";
 // import { BiPhoneCall } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../auth/AuthProvider";
+import Profile from "./Profile";
 
 export const Navbar = () => {
   const [isSticky, setIsSticky] = useState(Boolean);
+  const { user, logout } = useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,9 +139,23 @@ export const Navbar = () => {
               </span>
             </div>
           </button>
-          <Link to="/login" className="btn rounded-full bg-green text-white">
-            Login
-          </Link>
+          {user ? (
+            <div className="flex gap-8">
+              <Profile user={user} />
+              <p
+                onClick={() => {
+                  logout();
+                }}
+                className=" btn hidden md:flex rounded-full bg-red text-white"
+              >
+                Logout
+              </p>
+            </div>
+          ) : (
+            <Link to="/login" className="btn rounded-full bg-green text-white">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </header>

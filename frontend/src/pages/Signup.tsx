@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import github from "../assets/github.png";
 import google from "../assets/google.png";
 import facebook from "../assets/facebook.png";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthProvider";
 
 type Inputs = {
   example: string;
@@ -11,12 +12,32 @@ type Inputs = {
 };
 
 function Signup() {
+  const { createUser } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const email = data.email;
+    const password = data.password;
+
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        alert("creation success");
+        const redirectTo = location.state?.from?.pathname || "/";
+        navigate(redirectTo);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage("Email already in use!");
+      });
+  };
 
   return (
     <div>
@@ -54,6 +75,9 @@ function Signup() {
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
             <input
+              onClick={() => {
+                setErrorMessage("");
+              }}
               type="text"
               {...register("email", { required: true })}
               className="grow "
@@ -78,6 +102,9 @@ function Signup() {
               />
             </svg>
             <input
+              onClick={() => {
+                setErrorMessage("");
+              }}
               type="password"
               {...register("password", { required: true })}
               className="grow"
@@ -96,6 +123,9 @@ function Signup() {
             />
           </div>
         </form>{" "}
+        {errorMessage && (
+          <span className="text-red text-xs italic">{errorMessage}</span>
+        )}
         <p>
           Already have an account?
           <Link to="/login" className="font-semibold">

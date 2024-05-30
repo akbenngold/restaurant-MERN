@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import github from "../assets/github.png";
 import google from "../assets/google.png";
 import facebook from "../assets/facebook.png";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthProvider";
 
 type Inputs = {
   example: string;
@@ -11,12 +12,45 @@ type Inputs = {
 };
 
 function Login() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const { gmailSSO } = useContext(AuthContext);
+  const { login } = useContext(AuthContext); //navigate home or current page
+  const navigate = useNavigate();
+  const location = useLocation();
+  // const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const email = data.email;
+    const password = data.password;
+
+    login(email, password)
+      .then((result) => {
+        const user = result.user;
+        alert("login success");
+        const redirectTo = location.state?.from?.pathname || "/";
+        navigate(redirectTo);
+      })
+      .catch((err) => {
+        setErrorMessage("Wrong Email/Password");
+      });
+  };
+  const handleLogin = () => {
+    gmailSSO()
+      .then((result) => {
+        const user = result.user;
+        alert("login success");
+        const redirectTo = location.state?.from?.pathname || "/";
+        navigate(redirectTo, { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -38,6 +72,9 @@ function Login() {
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
             <input
+              onClick={() => {
+                setErrorMessage("");
+              }}
               type="text"
               {...register("email")}
               className="grow"
@@ -59,6 +96,9 @@ function Login() {
               />
             </svg>
             <input
+              onClick={() => {
+                setErrorMessage("");
+              }}
               type="password"
               {...register("password", { required: true })}
               className="grow"
@@ -77,6 +117,9 @@ function Login() {
             />
           </div>
         </form>{" "}
+        {errorMessage && (
+          <span className="text-red text-xs italic">{errorMessage}</span>
+        )}
         <p>
           New here?{" "}
           <Link to="/signup" className="font-semibold">
@@ -87,7 +130,7 @@ function Login() {
         <div className="flex justify-center gap-6">
           <img src={github} alt="" className="h-12 " />
           <img src={facebook} alt="" className="h-12 " />
-          <img src={google} alt="" className="h-12 " />
+          <img src={google} alt="" className="h-12 " onClick={handleLogin} />
         </div>
       </div>
     </div>
