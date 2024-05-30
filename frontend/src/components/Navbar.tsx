@@ -2,7 +2,7 @@
 import logo from "/logo.png";
 // import { BiPhoneCall } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   const [isSticky, setIsSticky] = useState(Boolean);
@@ -104,9 +104,9 @@ export const Navbar = () => {
               {navItems}
             </ul>
           </div>
-          <a href="/">
+          <Link to="/">
             <img src={logo} alt="logo" />
-          </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
@@ -136,7 +136,9 @@ export const Navbar = () => {
               </span>
             </div>
           </button>
-          <a className="btn rounded-full bg-green text-white">Contact</a>
+          <Link to="/login" className="btn rounded-full bg-green text-white">
+            Login
+          </Link>
         </div>
       </div>
     </header>

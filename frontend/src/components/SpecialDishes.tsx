@@ -5,11 +5,7 @@ import Slider from "react-slick";
 import data from "../data/menu.json";
 import Cards from "./Cards";
 
-const singleNextArrow = ({ className, style, onClick }) => {};
-
 function SpecialDishes() {
-  const slider = React.useRef(null);
-
   const settings = {
     dots: true,
     infinite: false,
